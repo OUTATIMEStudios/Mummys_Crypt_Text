@@ -12,6 +12,9 @@ namespace Mummys_Crypt_Text
         private string itemDescription;   // Describes the item when you look at it in the room
         private string invDescription;
         private int pointValue;
+        private int attackValue;
+        private int armorValue;
+        public bool CanPickUp = true;  // should allow any item to be picked up, unless otherwise specified
         public int Weight = 1;
 
         #region properties
@@ -45,6 +48,19 @@ namespace Mummys_Crypt_Text
             get { return pointValue; }
             set { pointValue = value; }
         }
+
+        public int AttackValue
+        {
+            get { return attackValue; }
+            set { attackValue = value; }
+        }
+
+        public int ArmorValue
+        {
+            get { return armorValue; }
+            set { armorValue = value; }
+        }
+
 
         #endregion
 

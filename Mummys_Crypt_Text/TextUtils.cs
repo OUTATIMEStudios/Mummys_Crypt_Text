@@ -30,7 +30,7 @@ namespace Mummys_Crypt_Text
         public static string WordWrap(String text, int bufferWidth)  // Shoud I use "String" or "string"  ??
         {
             String result = "";
-            String[] lines = text.Split('\n');
+            String[] lines = text.Split('\n');  // Split() will break apart string where the special character inside the () is and pass it to an array
 
             foreach (String line in lines)
             {

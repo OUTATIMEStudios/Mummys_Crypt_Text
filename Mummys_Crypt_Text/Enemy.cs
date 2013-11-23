@@ -10,7 +10,7 @@ namespace Mummys_Crypt_Text
         // since Enemy derives from the item class, we only need to define properties unique to the Enemy class, like health and attack.
         private string enemyDescription;  //I didn't like the idea of having "itemDescription" for Enemy, so I created this.
         private int healthValue;
-        private int attackValue;
+        //private int attackValue;
 
         #region properties
 
@@ -26,11 +26,12 @@ namespace Mummys_Crypt_Text
             set { healthValue = value; }
         }
 
-        public int AttackValue
-        {
-            get { return attackValue; }
-            set { attackValue = value; }
-        }
+        //public int AttackValue
+        //{
+        //    get { return attackValue; }
+        //    set { attackValue = value; }
+        //}
+
 
         #endregion
     }

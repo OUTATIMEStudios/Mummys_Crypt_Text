@@ -15,6 +15,8 @@ namespace Mummys_Crypt_Text
 
             if (Direction.IsValidDirection(command))
             {
+                Room room = Player.GetCurrentRoom();
+
                 Player.Move(command);  // moves the player if just "north" or "east" is typed
             }
             else
@@ -41,6 +43,9 @@ namespace Mummys_Crypt_Text
                         break;
                     case "open":
                         Player.Open(arguments);
+                        break;
+                    case "use":
+                        Player.Use(arguments);
                         break;
                     case "get":
                     case "take":
@@ -72,7 +77,8 @@ namespace Mummys_Crypt_Text
                         Player.Die();
                         break;
                     case "status":
-                        Text.Add("HP = " + Player.HealthValue);
+                        Text.Add("HP = " + Player.HealthValue + "\n");
+                        Text.Add("XP = " + Player.Score);
                         break;
                     default:   // if there is anything else typed besides the cases above.
                         Text.Add("I don't understand. Type HELP if you need it.");
@@ -86,11 +92,14 @@ namespace Mummys_Crypt_Text
 
         public static void ShowHelp()
         {
-           // Text.Add("Available Commands:");
-           // Text.Add("Go North - go to the north room");
-           // Text.Add("Dance - makes you dance");
+            Text.Add("Available Commands:");
+            Text.Add("Go North - go to the north room");
+            Text.Add("Search Room - thoroughly searches the room");
+            Text.Add("Attack/Kill Goblin - attacks a Goblin that is in the room");
+            Text.Add("Use Wand - uses a wand that is in your inventory");
+            Text.Add("Drink Fountain - tells your character to drink from a fountain in the room");
 
-            Player.GetCurrentRoom().Describe();   // Thy Dungeonman only shows the room description for HELP
+            //Player.GetCurrentRoom().Describe();   // Thy Dungeonman only shows the room description for HELP
         }
     }
 }

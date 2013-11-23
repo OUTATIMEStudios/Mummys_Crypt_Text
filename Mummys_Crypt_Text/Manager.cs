@@ -11,7 +11,7 @@ namespace Mummys_Crypt_Text
         public static void ShowTitleScreen()
         {
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine("                                           \n" +
                               "       _.-._        ************************  \n" +
@@ -45,7 +45,7 @@ namespace Mummys_Crypt_Text
             Console.Clear();
 
             Console.WriteLine(TextUtils.WordWrap(endingText, Console.WindowWidth));
-            Console.Write("\nThanks for playing. ");
+            Console.Write("\nGood luck on your next adventure. ");
             Console.CursorVisible = false;
 
             //while (true)
@@ -64,7 +64,7 @@ namespace Mummys_Crypt_Text
             Console.ReadKey(true);
         }
 
-        public static void ApplyRules()
+        public static void ApplyRules() // This will check for conditions (such as winning the game) based on what you typed above.
         {
             Room room = Player.GetCurrentRoom();
             // You can keep track of how many times someone typed the wrong command and then display a specific message for that.
@@ -72,23 +72,27 @@ namespace Mummys_Crypt_Text
             if (Player.GetKilledEnemies("goblin") != null)  // Checks to see if the goblin has been killed before changing the room description.
             {
                 Level.Rooms[1, 3].Description = "The corpse of a goblin lies in the middle of the floor, his axe and shield broken on the floor beside him.";
+                Level.Rooms[1, 3].SearchDescription = "You rifle the corpse of the goblin, and conduct a careful search of the entire room.  You find nothing of value.";
+            }
+
+            if (room.Title == "Treasure Chest Room" && room.Enemies.Count != 0)
+            {
+                Level.Rooms[2, 3].Description = "In the center of this room you see a large treasure chest.  A menacing skeleton now stands guard over it.";
+                Level.Rooms[2, 3].SearchDescription = "A large skeleton is here.  You cannot search the room now.";
             }
 
             if (Player.GetKilledEnemies("skeleton") != null)
             {
                 Level.Rooms[2, 3].Description = "Looking at the shattered bones of the defeated skeleton on the floor of this room, you are certain the guardian will not rise again.  You may approach the treasure chest without fear.";
+                Level.Rooms[2, 3].SearchDescription = "Save for the treasure chest, you find nothing else of value.";
+                Player.Skeleton = true;
             }
 
             if (Player.GetKilledEnemies("dog") != null)
             {
                 Level.Rooms[2, 2].Description = "You step over the blood-soaked corpse of the canine who attacked you earlier.  The room smells of wet dog.";
+                Level.Rooms[2, 2].SearchDescription = "There is nothing else of value in this room.";
             }
-
-            //if (Player.GetCurrentRoom() == Level.Rooms[0, 1] && Level.Rooms[0, 1].GetEnemy("ghost") != null && Player.Move(string Direction))
-            //{
-            //    Text.Add("You turn and flee in terror, but not before the ghost brushes you with its bony finger, numbing your body with the chill touch of the grave.");
-            //    Player.ge
-            //}
 
             if (Player.GetInventoryItem("scroll") != null)  // If you picked up the scroll, then we need to change the search description.
             {
@@ -104,17 +108,20 @@ namespace Mummys_Crypt_Text
             if (Player.GetKilledEnemies("gibberling") != null)
             {
                 Level.Rooms[2, 0].Description = "With the gibberling disposed of, there is little else of note in this room.";
+                Level.Rooms[2, 0].SearchDescription = "A search reveals nothing interesting.";
+                Level.Rooms[2, 0].AddExit(Direction.South);
+                Level.Rooms[2, 0].AddExit(Direction.West);
             }
 
             if (Player.GetKilledEnemies("mummy") != null)  // Killing the Mummy wins the game.
             {
-                EndGame("As the mummy falls, the symbol of Helm erupts with a blinding light.  You feel the body of the spirit warrior dissolve, and your life force rushes back to your true body. \nThanks for playing!  Your score was: " + Player.Score.ToString() + ".");
+                EndGame("As the mummy falls, the symbol of Helm erupts with a blinding light.  You feel the body of the spirit warrior dissolve, and your life force rushes back to your true body. \nThanks for playing!  Your experience points total: " + Player.Score.ToString() + ".");
             }
 
             if (Player.HealthValue <= 0)  //If the player's health reaches zero, it's game over.
             {
                 Player.Score -= 1;
-                EndGame("The spirit warrior collapses from its wounds. \nGAME OVER. Your score was: " + Player.Score + ". ");
+                EndGame("The spirit warrior collapses from his wounds. \n\nGAME OVER. Your acquired experince points: " + Player.Score + ". ");
             }
         }
     }
